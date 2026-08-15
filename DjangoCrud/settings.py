@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-
+import os
 import dj_database_url
 
 from pathlib import Path
@@ -36,7 +36,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'your_default_secret_key')'django-insecure-nv=-3o=ipnez=c5q4t3*c2rh_zy1dcb8l55^woucp+bzizp^%z'
 # That works too — just note the change: you renamed the environment variable to DJANGO_SECRET_KEY instead of SECRET_KEY. That's totally valid, just means you'll need to remember to use that exact same name (DJANGO_SECRET_KEY) when you set the environment variable on Render later — otherwise Django won't find it and will silently fall back to 'your_default_secret_key', which you don't want in production.
 
-SECRET_KEY = os.environ.get('SECRET_KEY', 'your_default_secret_key')'django-insecure-nv=-3o=ipnez=c5q4t3*c2rh_zy1dcb8l55^woucp+bzizp^%z'
+SECRET_KEY = os.environ.get('SECRET_KEY','django-insecure-nv=-3o=ipnez=c5q4t3*c2rh_zy1dcb8l55^woucp+bzizp^%z')
 
 
 
@@ -53,15 +53,17 @@ DEBUG = 'RENDER' not in os.environ  # Set DEBUG to False on Render.com
 
 
 
+# for the render version
+# ALLOWED_HOSTS = []
 
-ALLOWED_HOSTS = []
-
-RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+# RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+# if RENDER_EXTERNAL_HOSTNAME:
+#     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
 
+# Koyeb-compatible version:
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',') if os.environ.get('DJANGO_ALLOWED_HOSTS') else []
 
 
 # Application definition
