@@ -62,6 +62,7 @@ if RENDER_EXTERNAL_HOSTNAME:
 
 
 
+ 
 # # Koyeb-compatible version:
 # ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',') if os.environ.get('DJANGO_ALLOWED_HOSTS') else []
 
