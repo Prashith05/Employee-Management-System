@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .forms import EmployeeForm
 from .models import Employee
+from django.db.models import Q
 
 # # Create your views here.
 # def Home(request):
@@ -47,3 +48,18 @@ def delete_employee(request,pk):
         employee.delete()
         return redirect('list')
 
+
+# search view
+def employee_list(request):
+    query = request.GET.get('q', '').strip()
+    employees = Employee.objects.all()
+
+    if query:
+        employees = employees.filter(
+            Q(employee_id__icontains=query) |
+            Q(employee_name__icontains=query) |
+            Q(employee_email__icontains=query) |
+            Q(employee_contact__icontains=query)
+        )
+
+    return render(request, 'list.html', {'employees': employees, 'query': query})

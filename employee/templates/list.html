@@ -8,6 +8,19 @@
     <a class="btn btn-primary" href="{%url 'create'%}">Create Employee</a>
 </div>
 
+<form method="GET" class="row g-2 mb-3">
+    <div class="col-md-6">
+        <input type="text" name="q" value="{{ query }}" class="form-control"
+               placeholder="Search by ID, name, email or contact...">
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Search</button>
+        {% if query %}
+            <a href="{% url 'list' %}" class="btn btn-secondary">Clear</a>
+        {% endif %}
+    </div>
+</form>
+
 <table class="table table-bordered">
     <thead class="table-dark">
         <tr>
@@ -35,7 +48,7 @@
         </tr>
         {%endfor%}{%else%}
         <tr>
-            <td class="text-center" colspan="6">No employee found ...</td>
+            <td class="text-center" colspan="6">{% if query %}No employees match "{{ query }}".{% else %}No employee found ...{% endif %}</td>
         </tr>
         {%endif%}
     </tbody>
